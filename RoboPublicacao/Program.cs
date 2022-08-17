@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoboPublicacao.Flows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;
@@ -14,12 +15,17 @@ namespace RoboPublicacao
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new Service1()
-            };
-            ServiceBase.Run(ServicesToRun);
+            #if DEBUG
+                var flow = new MasterFlow();
+                flow.Execute();
+            #else
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
+                    new Service1()
+                };
+                ServiceBase.Run(ServicesToRun);
+            #endif
         }
     }
 }
